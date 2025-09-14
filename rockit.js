@@ -1,26 +1,36 @@
 // main ui, put whatever here
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 
-    createMainWindow()
-        this.window = new BrowserWindow({
-            title: 'title app',
-            width: 900,
-            height: 650,
-            frame: false,
-            backgroundColor: '#0a0a0a',
-            webPreferences: {
-                nodeIntegration: true,
-                contextIsolation: false
-            }
+let mainWindow;
+
+function createMainWindow() {
+    mainWindow = new BrowserWindow({
+        title: 'Aim',
+        width: 900,
+        height: 650,
+        frame: false,
+        backgroundColor: '#0a0a0a',
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false
+        }
     });
 
-        this.window.loadFile('rocket.html');
-        this.setupIPC();
+    mainWindow.loadFile('rocket.html');
 
-    let application;
-    app.whenReady().then(() => {
-    application.createMainWindow();
+    console.log("app is ready");
+}
+
+app.whenReady().then(() => {
+    createMainWindow();
+
+    app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createMainWindow();
+        }
+    });
 });
 
-app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
-app.on('activate', () => { if (!BrowserWindow.getAllWindows().length) application.createMainWindow(); });
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') app.quit();
+});
