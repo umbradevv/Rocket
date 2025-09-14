@@ -5,7 +5,7 @@ let mainWindow;
 
 function createMainWindow() {
     mainWindow = new BrowserWindow({
-        title: 'Aim',
+        title: 'rockit ui',
         width: 900,
         height: 650,
         frame: false,
@@ -33,4 +33,10 @@ app.whenReady().then(() => {
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') app.quit();
+});
+
+ipcMain.on('windowctrl', (event, action) => {
+  if (!mainWindow) return;
+  if (action === 'minimize') mainWindow.minimize();
+  if (action === 'close') mainWindow.close();
 });
