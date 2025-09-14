@@ -22,4 +22,5 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
     application.createMainWindow();
 });
 
+app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
 app.on('activate', () => { if (!BrowserWindow.getAllWindows().length) application.createMainWindow(); });
