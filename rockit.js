@@ -16,3 +16,10 @@ const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 
         this.window.loadFile('rocket.html');
         this.setupIPC();
+
+    let application;
+    app.whenReady().then(() => {
+    application.createMainWindow();
+});
+
+app.on('activate', () => { if (!BrowserWindow.getAllWindows().length) application.createMainWindow(); });
